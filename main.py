@@ -6,19 +6,15 @@ import random
 
 # Создаём приложение.
 # Мы передаём __name__, в нём содержится информация, в каком модуле мы находимся.
-# В данном случае там содержится '__main__',
-# так как мы обращаемся к переменной из запущенного модуля.
-# Если бы такое обращение, например, произошло внутри модуля logging,
-# то мы бы получили 'logging'
+# В данном случае там содержится '__main__', так как мы обращаемся к переменной из запущенного модуля.
+# Если бы такое обращение, например, произошло внутри модуля logging, то мы бы получили 'logging'
 app = Flask(__name__)
 
 # Устанавливаем уровень логирования
 logging.basicConfig(level=logging.INFO)
 
-# Создадим словарь, чтобы для каждой сессии общения
-# с навыком хранились подсказки, которые видел пользователь.
-# Это поможет нам немного разнообразить подсказки ответов
-# (buttons в JSON ответа).
+# Создадим словарь, чтобы для каждой сессии общения с навыком хранились подсказки, которые видел пользователь.
+# Это поможет нам немного разнообразить подсказки ответов (buttons в JSON ответа).
 sessionStorage = {}
 
 # флаги режимов
@@ -41,19 +37,10 @@ countries = {
     # Америка
     'America':
         {
-            'США': 'USA',
-            'Канада': 'Canada',
-            'Мексика': 'Mexico',
-            'Куба': 'Cuba',
-            'Бразилия': 'Brazil',
-            'Аргентина': 'Argentina',
-            'Чили': 'Chile',
-            'Перу': 'Peru',
-            'Колумбия': 'Colombia',
-            'Венесуэла': 'Venezuela',
-            'Эквадор': 'Ecuador',
-            'Гватемала': 'Guatemala',
-            'Боливия': 'Bolivia',
+            'США': 'USA', 'Канада': 'Canada', 'Мексика': 'Mexico', 'Куба': 'Cuba',
+            'Бразилия': 'Brazil', 'Аргентина': 'Argentina', 'Чили': 'Chile',
+            'Перу': 'Peru', 'Колумбия': 'Colombia', 'Венесуэла': 'Venezuela',
+            'Эквадор': 'Ecuador', 'Гватемала': 'Guatemala', 'Боливия': 'Bolivia',
             'Уругвай': 'Uruguay',
             'Парагвай': 'Paraguay',
             'Хондурас': 'Honduras',
@@ -779,10 +766,7 @@ def get_random_town(type):
     # получаем случайный город
     random_town = random.choice(list(countries['capitals'][type].items()))
     # получаем случайно ещё 3 города
-    random_towns = random.sample(list(countries['capitals']['Europe'].values())
-                                 + list(countries['capitals']['America'].values())
-                                 + list(countries['capitals']['Asia'].values())
-                                 + list(countries['capitals']['Africa'].values()), k=4)
+    random_towns = random.sample(list(countries['capitals']['Europe'].values()) + list(countries['capitals']['America'].values()) + list(countries['capitals']['Asia'].values()) + list(countries['capitals']['Africa'].values()), k=4)
 
     # проверяем, если наш город есть в списке из 3-х случайных городов
     while random_town[1] in random_towns:
@@ -801,14 +785,12 @@ def get_random_town(type):
 
 @app.route('/post', methods=['POST'])
 # Функция получает тело запроса и возвращает ответ.
-# Внутри функции доступен request.json - это JSON,
-# который отправила нам Алиса в запросе POST
+# Внутри функции доступен request.json - это JSON, который отправила нам Алиса в запросе POST
 def main():
 
     logging.info(f'Request: {request.json!r}')
 
-    # Начинаем формировать ответ, согласно документации
-    # мы собираем словарь, который потом отдадим Алисе
+    # Начинаем формировать ответ, согласно документации мы собираем словарь, который потом отдадим Алисе
     response = {
         'session': request.json['session'],
         'version': request.json['version'],
@@ -818,8 +800,7 @@ def main():
     }
 
     # Отправляем request.json и response в функцию handle_dialog.
-    # Она сформирует оставшиеся поля JSON, которые отвечают
-    # непосредственно за ведение диалога
+    # Она сформирует оставшиеся поля JSON, которые отвечают непосредственно за ведение диалога
     handle_dialog(request.json, response)
 
     logging.info(f'Response:  {response!r}')
